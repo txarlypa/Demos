@@ -10,9 +10,9 @@ namespace TestLoggerCore22.Errors
     {
         private readonly ILogger _logger;
 
-        public Errors(ILogger<Errors> logger)
+        public Errors(ILoggerFactory factory)
         {
-            _logger = logger;
+            _logger = factory.CreateLogger<Errors>();
         }
 
         public void Add(string error)

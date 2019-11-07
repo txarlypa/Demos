@@ -23,10 +23,16 @@ namespace TestLoggerCore22.Controllers
 
         public IActionResult Privacy()
         {
-            _logger.LogInformation("Mi primer log de informacion, by CP");
-            _logger.LogError("Mi primer log de error, by CP");
-            //_errors.Add("Error añadido desde la clase de errores");
-            StaticErrors.Add("Error añadido desde mi clase estatica", _logger);
+            //_logger.LogInformation("Mi primer log de informacion, by CP");
+            //_logger.LogError("Mi primer log de error, by CP");
+            ////_errors.Add("44. Error añadido desde la clase de errores");
+            //StaticErrors.Add("Error añadido desde mi clase estatica", _logger);
+
+            using (_logger.BeginScope("Mi mensaje personalizado", "Nombre:Carlos", "Apellido1:Para", "Apellido2:Gordo"))
+            {
+                _logger.LogInformation("Este es mi mensaje enriquecido");
+            }
+
             return View();
         }
 

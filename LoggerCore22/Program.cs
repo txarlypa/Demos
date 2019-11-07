@@ -14,15 +14,21 @@ namespace TestLoggerCore22
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: false)
+                .AddEnvironmentVariables()
+                .Build();
+
+            CreateWebHostBuilder(args, config).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args, IConfiguration config) =>
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureLogging((hostingContext, logging) =>
                 {
                     // Requires `using Microsoft.Extensions.Logging;`
                     logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                    logging.AddApplicationInsights(config.GetValue<string>("APPINSIGHTS_INSTRUMENTATIONKEY"));
                 })
                 .UseStartup<Startup>();
     }

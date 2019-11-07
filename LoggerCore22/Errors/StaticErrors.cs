@@ -8,7 +8,7 @@ namespace TestLoggerCore22.Errors
 {
     public static class StaticErrors
     {
-        public static void Add(string error, ILogger<Errors> logger)
+        public static void Add(string error, ILogger logger)
         {
             logger.LogError(error);
         }
